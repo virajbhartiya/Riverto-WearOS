@@ -351,21 +351,22 @@ class AppState extends State<Riverto> {
                                       ),
                                     )
                                   : Container(),
-                              // Container(
-                              //   child: IconButton(
-                              //     iconSize: 20,
-                              //     alignment: Alignment.center,
-                              //     icon: Icon(MdiIcons.apacheKafka),
-                              //     color: accent,
-                              //     onPressed: () => {
-                              //       Navigator.push(
-                              //         context,
-                              //         MaterialPageRoute(
-                              //             builder: (context) => QueueScreen()),
-                              //       ),
-                              //     },
-                              //   ),
-                              // )
+                              Container(
+                                child: IconButton(
+                                  iconSize: 20,
+                                  alignment: Alignment.center,
+                                  icon: Icon(MdiIcons.apacheKafka),
+                                  color: accent,
+                                  onPressed: () => {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => QueueScreen()),
+                                    ),
+                                  },
+                                ),
+                              ),
+                              Spacer()
                             ],
                           ),
                         ),
@@ -517,6 +518,26 @@ class AppState extends State<Riverto> {
                                             searchedList[index]["id"],
                                             context,
                                             index);
+                                      },
+                                      onLongPress: () async {
+                                        print("onLongPress");
+                                        await fetchLyrics(
+                                                searchedList[index]["id"],
+                                                searchedList[index]['more_info']
+                                                    ["singers"],
+                                                searchedList[index]['title'])
+                                            .then((_) => {});
+                                        QueueModel queueItem = new QueueModel()
+                                          ..title = searchedList[index]['title']
+                                          ..album = searchedList[index]
+                                              ['more_info']['album']
+                                          ..artist = searchedList[index]
+                                              ['more_info']["singers"]
+                                          ..id = searchedList[index]["id"]
+                                          ..lyrics = lyr
+                                          ..url = url;
+
+                                        Const.queueSongs.add(queueItem);
                                       },
                                       splashColor: accent,
                                       hoverColor: accent,
@@ -816,33 +837,33 @@ class AppState extends State<Riverto> {
                                             //   color: accent,
                                             //   icon: Icon(MdiIcons.apacheKafka),
                                             //   onPressed: () async {
-                                            //     await fetchLyrics(
-                                            //             searchedList[index]["id"],
-                                            //             searchedList[index]
-                                            //                     ['more_info']
-                                            //                 ["singers"],
-                                            //             searchedList[index]
-                                            //                 ['title'])
-                                            //         .then((_) => {});
-                                            //     QueueModel queueItem =
-                                            //         new QueueModel()
-                                            //           ..title =
-                                            //               searchedList[index]
-                                            //                   ['title']
-                                            //           ..album =
-                                            //               searchedList[index]
-                                            //                       ['more_info']
-                                            //                   ['album']
-                                            //           ..artist =
-                                            //               searchedList[index]
-                                            //                       ['more_info']
-                                            //                   ["singers"]
-                                            //           ..id = searchedList[index]
-                                            //               ["id"]
-                                            //           ..lyrics = lyr
-                                            //           ..url = url;
+                                            // await fetchLyrics(
+                                            //         searchedList[index]["id"],
+                                            //         searchedList[index]
+                                            //                 ['more_info']
+                                            //             ["singers"],
+                                            //         searchedList[index]
+                                            //             ['title'])
+                                            //     .then((_) => {});
+                                            // QueueModel queueItem =
+                                            //     new QueueModel()
+                                            //       ..title =
+                                            //           searchedList[index]
+                                            //               ['title']
+                                            //       ..album =
+                                            //           searchedList[index]
+                                            //                   ['more_info']
+                                            //               ['album']
+                                            //       ..artist =
+                                            //           searchedList[index]
+                                            //                   ['more_info']
+                                            //               ["singers"]
+                                            //       ..id = searchedList[index]
+                                            //           ["id"]
+                                            //       ..lyrics = lyr
+                                            //       ..url = url;
 
-                                            //     Const.queueSongs.add(queueItem);
+                                            // Const.queueSongs.add(queueItem);
                                             //   },
                                             // ),
                                           ],
